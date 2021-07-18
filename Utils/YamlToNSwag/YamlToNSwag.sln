@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlToNSwag", "YamlToNSwag\YamlToNSwag.csproj", "{4999FD59-C670-4279-B17F-2048700A6323}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4999FD59-C670-4279-B17F-2048700A6323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4999FD59-C670-4279-B17F-2048700A6323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4999FD59-C670-4279-B17F-2048700A6323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4999FD59-C670-4279-B17F-2048700A6323}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96EC00AA-2970-4804-A664-EFE6BA8025E5}
+	EndGlobalSection
+EndGlobal

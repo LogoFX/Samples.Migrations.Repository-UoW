@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2CB9F5FE-9DEF-4977-A898-C40143625EBC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Samples.Server.Api</RootNamespace>
+    <AssemblyName>Samples.Server.Api</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugAdoNet|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\AdoNet\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>..\bin\AdoNet\Samples.Server.Api.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugEF|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\DebugEF\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>..\bin\DebugEF\Samples.Server.Api.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\api.cs" />
+    <Compile Include="Controllers\CourtsController.cs" />
+    <Compile Include="Controllers\EntitiesController.cs" />
+    <Compile Include="Controllers\InterestsController.cs" />
+    <Compile Include="Controllers\PrivilegesController.cs" />
+    <Compile Include="Controllers\ProceduresController.cs" />
+    <Compile Include="Controllers\ProceedingsController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Mappers\CourtMapper.cs" />
+    <Compile Include="Mappers\MappingProfile.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Controllers\api\api.yaml" />
+    <None Include="Controllers\api\es-api.nswag" />
+    <None Include="Controllers\api\Templates\Controller.liquid" />
+    <None Include="Controllers\api\Templates\File.liquid" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\LogoFX.Practices.Composition\LogoFX.Practices.Composition.csproj">
+      <Project>{284CBDD1-AADB-4CA2-B6F3-88548E9F0764}</Project>
+      <Name>LogoFX.Practices.Composition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\LogoFX.Practices.IoC\LogoFX.Practices.IoC.csproj">
+      <Project>{CB390942-3103-4C81-9B6A-F948B402A181}</Project>
+      <Name>LogoFX.Practices.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\LogoFX.WebApi2.Core\LogoFX.WebApi2.Core.csproj">
+      <Project>{2DF223E2-2DD9-41B9-9609-92676F0D6D59}</Project>
+      <Name>LogoFX.WebApi2.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samples.Server.Domain.Contracts\Samples.Server.Domain.Contracts.csproj">
+      <Project>{5512C587-6E38-44BB-8078-5D4D5C7341B5}</Project>
+      <Name>Samples.Server.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Samples.Server.Domain.Entities\Samples.Server.Domain.Entities.csproj">
+      <Project>{9F12BECB-8135-4CC3-BA56-BB8F34383A3C}</Project>
+      <Name>Samples.Server.Domain.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper">
+      <Version>10.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="JetBrains.Annotations">
+      <Version>2021.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core">
+      <Version>5.2.7</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(SolutionDir)..\..\devops
+generate-api $(ProjectDir)</PreBuildEvent>
+  </PropertyGroup>
+</Project>

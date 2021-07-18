@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Samples.Server.GraphQL.Facade</AssemblyName>
+    <RootNamespace>Samples.Server.GraphQL.Facade</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\LogoFX.Data.DbContext.AdoDotNet\LogoFX.Data.DbContext.AdoDotNet.csproj" />
+    <ProjectReference Include="..\..\common\LogoFX.Data.Repository.AdoDotNet\LogoFX.Data.Repository.AdoDotNet.csproj" />
+    <ProjectReference Include="..\..\common\LogoFX.Data.Repository\LogoFX.Data.Repository.csproj" />
+    <ProjectReference Include="..\Samples.Server.Data.Context.AdoDotNet\Samples.Server.Data.Context.AdoDotNet.csproj" />
+    <ProjectReference Include="..\Samples.Server.Domain.Contracts\Samples.Server.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\Samples.Server.Domain.Entities\Samples.Server.Domain.Entities.csproj" />
+    <ProjectReference Include="..\Samples.Server.Domain.Implementation\Samples.Server.Domain.Implementation.csproj" />
+  </ItemGroup>
+
+</Project>

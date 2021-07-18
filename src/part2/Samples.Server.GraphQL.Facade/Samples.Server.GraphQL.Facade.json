@@ -1,0 +1,9 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "urls": "http://*:47568/",
+  "AllowedHosts": "*"
+}

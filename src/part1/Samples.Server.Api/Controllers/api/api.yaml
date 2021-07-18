@@ -1,0 +1,1757 @@
+openapi: 3.0.0
+info:
+  title: elastic-search-ui-api
+  version: '1.0'
+  contact:
+    name: David Kossoglyad
+    email: david@logoui.co.il
+  description: The API is useful to retrieve the search results from NGCS document storage.
+tags:
+  - name: search
+    description: TBD
+  - name: courts
+    description: Listing Courts
+  - name: entities
+    description: Listing Entity types
+  - name: interests
+    description: Listiting Interest types
+  - name: privileges
+    description: Listing Privileges types
+  - name: proceedings
+    description: Listing Proceeding types
+  - name: procedures
+    description: Listing Procedure types
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /search:
+    x-map: search
+    x-delay: 300
+    post:
+      x-use-get: true
+      summary: Finds Documents
+      operationId: postSearchQuery
+      tags:
+        - search
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResultDto'
+              examples: {}
+          headers: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+      description: 'Returns the single object containing both, the list of search resuls (each of items references a document with related entities and statistics) and statistics info related to the entire search operation as well satisfying the search query.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryDto'
+        description: ''
+  /courts:
+    x-map: courts
+    x-delay: 100
+    get:
+      summary: Listing Courts
+      tags:
+        - courts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourtDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 17
+                      name: שלום נצרת
+                      level: שלום
+                    - id: 18
+                      name: שלום טבריה
+                      level: שלום
+                    - id: 19
+                      name: שלום בית שאן
+                      level: שלום
+                    - id: 20
+                      name: שלום צפת
+                      level: שלום
+                    - id: 21
+                      name: שלום עפולה
+                      level: שלום
+                    - id: 22
+                      name: שלום קריית שמונה
+                      level: שלום
+                    - id: 23
+                      name: שלום קצרין
+                      level: שלום
+                    - id: 24
+                      name: שלום מסעדה
+                      level: שלום
+                    - id: 25
+                      name: שלום קריות
+                      level: שלום
+                    - id: 26
+                      name: שלום חיפה
+                      level: שלום
+                    - id: 27
+                      name: שלום עכו
+                      level: שלום
+                    - id: 28
+                      name: שלום חדרה
+                      level: שלום
+                    - id: 30
+                      name: שלום ירושלים
+                      level: שלום
+                    - id: 31
+                      name: שלום בית שמש
+                      level: שלום
+                    - id: 32
+                      name: שלום תל אביב - יפו
+                      level: שלום
+                    - id: 34
+                      name: שלום הרצליה
+                      level: שלום
+                    - id: 35
+                      name: שלום פתח תקווה
+                      level: שלום
+                    - id: 36
+                      name: שלום רמלה
+                      level: שלום
+                    - id: 37
+                      name: שלום רחובות
+                      level: שלום
+                    - id: 38
+                      name: שלום נתניה
+                      level: שלום
+                    - id: 39
+                      name: שלום כפר סבא
+                      level: שלום
+                    - id: 40
+                      name: שלום ראשון לציון
+                      level: שלום
+                    - id: 41
+                      name: שלום באר שבע
+                      level: שלום
+                    - id: 42
+                      name: שלום אשקלון
+                      level: שלום
+                    - id: 43
+                      name: שלום אשדוד
+                      level: שלום
+                    - id: 44
+                      name: שלום קריית גת
+                      level: שלום
+                    - id: 45
+                      name: שלום דימונה
+                      level: שלום
+                    - id: 46
+                      name: שלום אילת
+                      level: שלום
+                    - id: 58
+                      name: עניינים מקומיים אריאל
+                      level: עניינים מקומיים
+                    - id: 237
+                      name: שלום בת ים
+                      level: שלום
+      operationId: getCourts
+      description: Returns the list of available Court names.
+  /courts/levels:
+    x-map: courts_levels
+    x-delay: 100
+    get:
+      summary: Listing Court Level types
+      tags:
+        - courts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/CourtLevelDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: שלום
+                    - id: 2
+                      name: מחוזי
+                    - id: 3
+                      name: עליון
+                    - id: 4
+                      name: עבודה ארצי
+                    - id: 5
+                      name: עבודה אזורי
+                    - id: 6
+                      name: עניינים מקומיים
+                    - id: 7
+                      name: שטחים מוחזקים
+                    - id: 8
+                      name: ועדת שחרורים
+        '404':
+          description: Not Found
+      operationId: getCourtLevels
+      description: Returns the list of available Court Level types.
+  /procedures:
+    x-map: procedures
+    x-delay: 100
+    get:
+      summary: Listing Procedure types
+      tags:
+        - procedures
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProcedureDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: אזרחי
+                    - id: 2
+                      name: פלילי
+                    - id: 3
+                      name: מנהלי
+                    - id: 4
+                      name: בג"צ
+      operationId: getProcedures
+      description: Gets all types of procedures supported by the server.
+  /proceedings:
+    x-map: proceedings
+    x-delay: 100
+    get:
+      summary: Listing Proceeding types
+      tags:
+        - proceedings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProceedingDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: אזרחי
+                    - id: 2
+                      name: פלילי
+                    - id: 3
+                      name: משפחה
+                    - id: 4
+                      name: עניינים מנהליים
+                    - id: 5
+                      name: תעבורה
+                    - id: 7
+                      name: בג"צ
+                    - id: 8
+                      name: נוער
+                    - id: 9
+                      name: תביעות קטנות
+                    - id: 10
+                      name: עניינים מקומיים
+                    - id: 11
+                      name: שכירות
+                    - id: 12
+                      name: תחרות כלכלית
+                    - id: 13
+                      name: חוזים אחידים
+                    - id: 14
+                      name: ערעור אזרחי
+                    - id: 15
+                      name: ימאות
+                    - id: 16
+                      name: ענייני מים
+                    - id: 17
+                      name: ערעור פלילי
+                    - id: 18
+                      name: מעצרים
+                    - id: 19
+                      name: ועדות ערר
+                    - id: 20
+                      name: פירוקים ופשיטות רגל
+                    - id: 21
+                      name: עניינים כלכליים
+                    - id: 22
+                      name: ועדת שחרורים
+                    - id: 24
+                      name: חדלות פירעון
+      operationId: getProceedings
+      description: Returns the list of available Proceeding types.
+  /interests:
+    x-map: interests
+    x-delay: 100
+    get:
+      summary: Listiting Interest types
+      tags:
+        - interests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/InterestDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: 'מינוי בורר, העברת בורר, הוראות לבוררות'
+                    - id: 2
+                      name: אחר
+                    - id: 3
+                      name: אחר - תקנה 3 (אגרות)
+                    - id: 4
+                      name: איחוד משפחות
+                    - id: 5
+                      name: הסדר כובל
+                    - id: 6
+                      name: אישור הסכם גישור
+                    - id: 7
+                      name: אישור פסק בורר
+                    - id: 8
+                      name: אכיפת שיעבוד
+                    - id: 9
+                      name: ארנונה
+                    - id: 10
+                      name: בזיון המפקח על המקרקעין
+                    - id: 11
+                      name: חוזה אחיד
+                    - id: 12
+                      name: ביטול פסק בורר
+                    - id: 13
+                      name: בית דין למשמורת
+                    - id: 14
+                      name: בנקים ואשראי
+                    - id: 15
+                      name: דיור ציבורי
+                    - id: 16
+                      name: הארכת כתבי אופציה
+                    - id: 17
+                      name: החייאת חברה/החייאת עמותה
+                    - id: 18
+                      name: היטל השבחה
+                    - id: 19
+                      name: ערר בעניין מיזוג חברות
+                    - id: 20
+                      name: הסדר נושים סעיף 350 לחוק החברות
+                    - id: 22
+                      name: הפקעה או פסיקת דמי שכירות - הגנת הדייר
+                    - id: 23
+                      name: הקפאת הליכים
+                    - id: 24
+                      name: התנגדות לביצוע שטר
+                    - id: 26
+                      name: ועדה לזכויות מטפחים זני צמחים
+                    - id: 27
+                      name: ועדת משמעת לפי חוק חוקרים פרטיים ושירותי שמירה
+                    - id: 28
+                      name: 'ועדת ערר מיסוי מקרקעין (שבח, מכירה, רכישה)'
+                    - id: 29
+                      name: ועדת ערר לפי חוק נפגעי פעולות איבה
+                    - id: 30
+                      name: ועדת ערר לפי חוק רישום קבלנים
+                    - id: 31
+                      name: חוזים
+                    - id: 32
+                      name: חופש המידע
+                    - id: 33
+                      name: חוק החוסים
+                    - id: 34
+                      name: חינוך
+                    - id: 35
+                      name: חלוקת דיבידנד
+                    - id: 36
+                      name: טען ביניים
+                    - id: 38
+                      name: 'כללי, הצהרתי'
+                    - id: 41
+                      name: כספית אחרת
+                    - id: 42
+                      name: תובענה ייצוגית לפי חוק הבנקאות
+                    - id: 43
+                      name: תובענה ייצוגית לפי חוק ההגבלים העסקיים
+                    - id: 44
+                      name: תובענה ייצוגית לפי חוק להגנת הצרכן
+                    - id: 45
+                      name: ערר לפי סעיף 10 לחוק השיקים
+                    - id: 46
+                      name: לשון הרע
+                    - id: 47
+                      name: מיטלטלין
+                    - id: 48
+                      name: מיזוג – פיצול
+                    - id: 49
+                      name: מכרזים
+                    - id: 50
+                      name: מנהל האוכלוסין
+                    - id: 51
+                      name: מקרקעין
+                    - id: 52
+                      name: מקרקעין - ליקויי בנייה
+                    - id: 53
+                      name: מקרקעין - פינוי/סילוק
+                    - id: 54
+                      name: מקרקעין - פירוק שיתוף
+                    - id: 55
+                      name: נזקי גוף
+                    - id: 56
+                      name: נזקי גוף - רשלנות רפואית
+                    - id: 58
+                      name: ערעור  על  הסיוע המשפטי
+                    - id: 59
+                      name: ערעור בחירות
+                    - id: 60
+                      name: ערעור הסדר תפיסת מקרקעין בשעת חירום
+                    - id: 61
+                      name: ערעור לפי חוק הנכים
+                    - id: 62
+                      name: ערעור לפי חוק חיילים שנספו במערכה
+                    - id: 63
+                      name: ערעור לפי חוק נכי המלחמה בנאצים
+                    - id: 64
+                      name: ערעור לפי חוק שירות הקבע בצה"ל
+                    - id: 65
+                      name: ערעור מס הכנסה - שנות מס (1)
+                    - id: 66
+                      name: ערעור מע"מ - שנות מס (1)
+                    - id: 67
+                      name: ערעור על בית המשפט לענייני משפחה
+                    - id: 68
+                      name: ערעור על בית המשפט לנוער
+                    - id: 69
+                      name: ערעור על בית משפט השלום
+                    - id: 70
+                      name: ערעור על הוועדה לפי חוק הנכים
+                    - id: 71
+                      name: ערעור על הוועדה לפי חוק חיילים שנספו במערכה
+                    - id: 72
+                      name: ערעור על  ההוצאה לפועל
+                    - id: 73
+                      name: ערעור על החלטת רשם
+                    - id: 74
+                      name: ערעור על המפקח על המקרקעין
+                    - id: 75
+                      name: ערעור על ועדה פסיכיאטרית
+                    - id: 76
+                      name: ערעור על ועדה רפואית עליונה
+                    - id: 77
+                      name: ערעור על ועדת נכי רדיפות הנאצים
+                    - id: 78
+                      name: ערעור על מס רכוש
+                    - id: 79
+                      name: ועדת הכרעה לפי חוק ההתיישבות החקלאית
+                    - id: 80
+                      name: ערר לפי חוק הסעד (טיפול במפגרים)
+                    - id: 81
+                      name: ערר לפי חוק הספורט
+                    - id: 82
+                      name: ערר לפי חוק הרשויות המקומיות (ביוב)
+                    - id: 83
+                      name: ערר לפי חוק נכי רדיפות הנאצים
+                    - id: 85
+                      name: ערר לפי חוק כביש אגרה
+                    - id: 87
+                      name: עתירות אסירים
+                    - id: 88
+                      name: פירוק חברה לבקשתה
+                    - id: 89
+                      name: פלת"ד
+                    - id: 91
+                      name: פסיקת דמי שכירות - הגנת הדייר
+                    - id: 92
+                      name: פשיטת רגל על ידי חייב
+                    - id: 93
+                      name: פשיטת רגל על ידי נושה
+                    - id: 94
+                      name: צו הגנה
+                    - id: 95
+                      name: מניעת הטרדה מאיימת
+                    - id: 96
+                      name: קניין רוחני - פטנטים
+                    - id: 97
+                      name: קניין רוחני אחר
+                    - id: 98
+                      name: ערעור על טריבונלים/מומחים
+                    - id: 99
+                      name: רשות ערעור אזרחי
+                    - id: 100
+                      name: רשות ערעור הוצאה לפועל
+                    - id: 101
+                      name: רשות ערעור משפחה
+                    - id: 102
+                      name: רשות ערעור תביעות קטנות
+                    - id: 103
+                      name: שיבוב וביטוח
+                    - id: 104
+                      name: תכנון ובנייה
+                    - id: 105
+                      name: תביעה אחרת (שאינה כספית ואינה בגדר תקנה 3)
+                    - id: 106
+                      name: תובענה ייצוגית
+                    - id: 108
+                      name: תובענה מינהלית
+                    - id: 117
+                      name: היתר נישואין
+                    - id: 125
+                      name: עשיית צוואה בפני רשות
+                    - id: 132
+                      name: אכיפת פסק חוץ - אחר
+                    - id: 135
+                      name: תובענה בעניין קטין
+                    - id: 137
+                      name: תביעה לאבהות/אמהות
+                    - id: 139
+                      name: חטיפת ילדים לפי אמנת האג
+                    - id: 142
+                      name: התרת נישואין בהסכמה
+                    - id: 144
+                      name: קביעת גיל
+                    - id: 145
+                      name: שינוי שם
+                    - id: 148
+                      name: ערעור על החלטת רשם ההוצאה לפועל
+                    - id: 153
+                      name: אישור הסכם ממון וגירושין
+                    - id: 154
+                      name: אישור הסכם ממון
+                    - id: 155
+                      name: בקשה ליישוב סכסוך
+                    - id: 158
+                      name: תביעה רכושית
+                    - id: 159
+                      name: מזונות מן העיזבון
+                    - id: 160
+                      name: צו ירושה/צו קיום צוואה
+                    - id: 161
+                      name: התנגדות לצו ירושה/לצו קיום צוואה
+                    - id: 162
+                      name: הוכחת צוואה
+                    - id: 163
+                      name: ערעור על החלטת רשם הירושות
+                    - id: 164
+                      name: מינוי מנהל עיזבון
+                    - id: 166
+                      name: הצהרת מוות
+                    - id: 167
+                      name: ענייני משפחה אחרים
+                    - id: 182
+                      name: תיירות
+                    - id: 192
+                      name: שכירות
+                    - id: 230
+                      name: אמהות
+                    - id: 231
+                      name: אבטלה
+                    - id: 232
+                      name: ילדים
+                    - id: 233
+                      name: הבטחת הכנסה
+                    - id: 234
+                      name: סיעוד
+                    - id: 235
+                      name: נכות
+                    - id: 236
+                      name: זיקנה ושאירים
+                    - id: 237
+                      name: דמי מזונות
+                    - id: 239
+                      name: נפגעי עבודה
+                    - id: 240
+                      name: נפגעי תאונות
+                    - id: 241
+                      name: תגמולים למשרתים במילואים
+                    - id: 242
+                      name: תגמולים למתנדבים
+                    - id: 243
+                      name: תושבות
+                    - id: 258
+                      name: לפי חוק ביטוח בריאות ממלכתי
+                    - id: 259
+                      name: דמי טיפול ארגוני - מקצועי
+                    - id: 260
+                      name: ערעור שירות התעסוקה
+                    - id: 262
+                      name: סכסוך קיבוצי
+                    - id: 280
+                      name: ערעור בעניין פסלות שופט
+                    - id: 281
+                      name: ערעור בעניין אימוץ
+                    - id: 10023
+                      name: ערעור על החלטה אחרת
+                    - id: 10114
+                      name: ערעור על החלטה בעניין פטור מאגרה
+                    - id: 10115
+                      name: תביעה כספית לסכום כסף קצוב
+                    - id: 10116
+                      name: תביעה כספית לסכום כסף בלתי קצוב
+                    - id: 10117
+                      name: תביעה כספית ורכושית
+                    - id: 10118
+                      name: תביעה למזונות ומדור
+                    - id: 10119
+                      name: התרת נישואין
+                    - id: 10120
+                      name: ביטול הסכם
+                    - id: 10121
+                      name: אכיפת הסכם
+                    - id: 10122
+                      name: מינוי אפוטרופוס לעניינים אישיים ולרכוש
+                    - id: 10123
+                      name: אישור פעולה בשם חסוי/קטין
+                    - id: 10124
+                      name: אכיפת פסק חוץ - מזונות
+                    - id: 10125
+                      name: הוכחת מוות
+                    - id: 10126
+                      name: רכב
+                    - id: 10127
+                      name: ספק - לקוח
+                    - id: 10128
+                      name: פסק דין הצהרתי - כללי
+                    - id: 10129
+                      name: אישור הסכם פינוי
+                    - id: 10130
+                      name: התראת פשיטת רגל
+                    - id: 10131
+                      name: ערעור בעניין חטיפת ילדים
+                    - id: 10132
+                      name: ערעור על החלטת הממונה על פי חוק שירות המדינה
+                    - id: 10133
+                      name: כללי
+                    - id: 10136
+                      name: שחרור קופת פיצויים
+                    - id: 10137
+                      name: ערעור על ועדת מומחים
+                    - id: 10138
+                      name: תובענה ארגונית (בין עובד לארגון עובדים)
+                    - id: 10139
+                      name: שמירת הריון
+                    - id: 10140
+                      name: נפגעי פעולות איבה
+                    - id: 10141
+                      name: ערעור על ועדות רפואיות
+                    - id: 10146
+                      name: ועדת תעסוקה לפי חוק חיילים משוחררים
+                    - id: 10153
+                      name: 'ערעור על פסק דין בסדר דין רגיל, לפי סעיף 27 (ב)'
+                    - id: 10155
+                      name: סכסוך קיבוצי בין ארגון עובדים לארגון מעבידים
+                    - id: 10156
+                      name: סכסוך בין ארגוני עובדים
+                    - id: 10157
+                      name: לעניין קבלה או  שלילת רשיון קבלן
+                    - id: 10158
+                      name: ערעור עבודה
+                    - id: 10159
+                      name: ערעור סכסוך קיבוצי
+                    - id: 10161
+                      name: על החלטות ביניים של בית הדין האזורי
+                    - id: 10162
+                      name: על פסק דין של בית הדין האזורי  בדיון מהיר
+                    - id: 10163
+                      name: על פסק דין של בית הדין האזורי בערעור על החלטת רשם
+                    - id: 10164
+                      name: על פסק דין של ביטוח לאומי - ועדות רפואיות
+                    - id: 10165
+                      name: גזזת - על פסק דין של ועדה רפואית
+                    - id: 10166
+                      name: תביעת עמית נגד הקופה בדיון מהיר
+                    - id: 10168
+                      name: תביעת עמית נגד הקופה - אחר
+                    - id: 10169
+                      name: תביעת מעביד נגד הקופה בדיון מהיר
+                    - id: 10171
+                      name: תביעת מעביד נגד הקופה - דיון רגיל
+                    - id: 10172
+                      name: תביעת קופת גמל  או המעביד - סעד הצהרתי
+                    - id: 10173
+                      name: הכרה כידוע/ה בציבור
+                    - id: 10174
+                      name: אישור הסכם גירושין
+                    - id: 10175
+                      name: ערעור על ועדות אחרות
+                    - id: 10176
+                      name: על החלטה שעניינה פטור מאגרה / ערבון
+                    - id: 10177
+                      name: דיון מהיר בסמכות רשם
+                    - id: 10178
+                      name: שכר עבודה בסמכות רשם
+                    - id: 10179
+                      name: תביעת חפצא
+                    - id: 10180
+                      name: ערעור על בית דין למשמעת
+                    - id: 10181
+                      name: ערר על פי חוק המים
+                    - id: 10182
+                      name: סכסוך עבודה
+                    - id: 10183
+                      name: תביעת מעביד נגד הקופה - סעד הצהרתי
+                    - id: 10184
+                      name: תביעת קופת גמל נגד מעביד או עמית - כספית
+                    - id: 10185
+                      name: ועדת ערר - שירות התעסוקה
+                    - id: 10187
+                      name: ערעור על פסק דין בדיון מהיר
+                    - id: 10188
+                      name: תלושי שכר ומכתבים לעובד
+                    - id: 10189
+                      name: הגבלת עיסוק
+                    - id: 10191
+                      name: תביעה מכח חוקים שונים
+                    - id: 10193
+                      name: בקשה למתן צו אימוץ
+                    - id: 10194
+                      name: בקשה להכרזת בר אימוץ
+                    - id: 10195
+                      name: בקשה לפי סעיף 12 ג
+                    - id: 10196
+                      name: אימוץ קרובים
+                    - id: 10197
+                      name: בקשה למתן צו הורות
+                    - id: 10200
+                      name: בקשה לביצוע תביעה
+                    - id: 10201
+                      name: התנגדות לבקשה לביצוע תביעה בהוצאה לפועל
+                    - id: 10202
+                      name: 'פיצויי פיטורים עד 22,700 ₪'
+                    - id: 10203
+                      name: ניהול רכושם של נעדרים או שבויים ללא התנגדות
+                    - id: 10204
+                      name: פירוק חברה (שלא לבקשתה)
+                    - id: 10205
+                      name: ניהול רכושם של נעדרים או שבויים עם התנגדות
+                    - id: 10207
+                      name: הסדרת עיסוק
+                    - id: 10208
+                      name: נכים ומשפחות חיילים שנספו במערכה
+                    - id: 10209
+                      name: תביעת נזקקות
+                    - id: 10210
+                      name: התנגדות לבקשה לביצוע תביעה
+                    - id: 10211
+                      name: בקשה לביצוע תביעה
+                    - id: 10212
+                      name: קשירה לתיק העיקרי
+                    - id: 10213
+                      name: בתי משפט וסדרי דין
+                    - id: 10214
+                      name: רופאים
+                    - id: 10215
+                      name: נזקי גוף - גובה הנזק
+                    - id: 10216
+                      name: קניין רוחני
+                    - id: 10217
+                      name: פשיטת רגל ופירוקים
+                    - id: 10218
+                      name: מסים
+                    - id: 10219
+                      name: נזיקין
+                    - id: 10220
+                      name: תובענה יצוגית וצרכנות
+                    - id: 10221
+                      name: תאגידים וניירות ערך
+                    - id: 10222
+                      name: משפחה
+                    - id: 10223
+                      name: פסלות שופט
+                    - id: 10224
+                      name: ערעור על פסק דין
+                    - id: 10226
+                      name: ערעור שני
+                    - id: 10227
+                      name: בוררות
+                    - id: 10228
+                      name: משקם
+                    - id: 10229
+                      name: הוצאה לפועל
+                    - id: 10230
+                      name: אימוץ
+                    - id: 10231
+                      name: חוק הנכים תגמולים ושיקום
+                    - id: 10232
+                      name: חיילים שנספו במערכה
+                    - id: 10233
+                      name: ועדה רפואית עליונה
+                    - id: 10234
+                      name: נכי רדיפות הנאצים
+                    - id: 10235
+                      name: ועדה פסיכיאטרית
+                    - id: 10236
+                      name: נכי המלחמה בנאצים
+                    - id: 10237
+                      name: דיון נוסף אזרחי
+                    - id: 10238
+                      name: העברת מקום דיון
+                    - id: 10239
+                      name: איחוד תובענות
+                    - id: 10240
+                      name: בקשת שופט בעל דין בהליך אזרחי
+                    - id: 10241
+                      name: תושבות
+                    - id: 10242
+                      name: ערעור עצור בעניין משמורת שוהים שלא כדין
+                    - id: 10243
+                      name: ערעור מי שאינו עצור בעניין משמורת שוהים שלא כדין
+                    - id: 10244
+                      name: החלטה אחרת
+                    - id: 10245
+                      name: פסק דין בערעור מינהלי
+                    - id: 10246
+                      name: בחירות
+                    - id: 10247
+                      name: דיון נוסף מינהלי
+                    - id: 10248
+                      name: ערעור בחירות לפי סעיף 64 לחוק הבחירות לכנסת
+                    - id: 10249
+                      name: בית דין משמעתי לשופטים
+                    - id: 10250
+                      name: ערעור נושאי משרה שלטונית
+                    - id: 10251
+                      name: ערעור על החלטת בית הדין המשמעתי לעובדי המדינה
+                    - id: 10252
+                      name: ערעור לפי חוק הרשויות המקומיות (משמעת)
+                    - id: 10253
+                      name: בית דין מיוחד
+                    - id: 10254
+                      name: ערעור לשכת עורכי הדין
+                    - id: 10255
+                      name: אזרחות
+                    - id: 10256
+                      name: בתי משפט
+                    - id: 10257
+                      name: בית דין רבני
+                    - id: 10258
+                      name: בית דין לעבודה
+                    - id: 10259
+                      name: הריסת בתים
+                    - id: 10260
+                      name: כניסה ויציאה מישראל
+                    - id: 10261
+                      name: עובדים זרים
+                    - id: 10262
+                      name: מעצרים מינהליים
+                    - id: 10263
+                      name: פגישה עם עורך דין
+                    - id: 10264
+                      name: גדר הפרדה
+                    - id: 10265
+                      name: רשויות מקומיות
+                    - id: 10266
+                      name: המשרד לאיכות הסביבה
+                    - id: 10267
+                      name: משרד האוצר
+                    - id: 10268
+                      name: משרד הבטחון
+                    - id: 10269
+                      name: המשרד לבטחון פנים
+                    - id: 10270
+                      name: משרד הבריאות
+                    - id: 10271
+                      name: משרד הדתות
+                    - id: 10272
+                      name: משרד החוץ
+                    - id: 10273
+                      name: משרד החינוך והתרבות
+                    - id: 10274
+                      name: משרד החקלאות
+                    - id: 10275
+                      name: משרד המסחר והתעשיה
+                    - id: 10276
+                      name: משרד המשפטים
+                    - id: 10277
+                      name: משרד העבודה והרווחה
+                    - id: 10278
+                      name: משרד הפנים
+                    - id: 10279
+                      name: משרד השיכון
+                    - id: 10280
+                      name: משרד התחבורה
+                    - id: 10281
+                      name: משרד התקשורת
+                    - id: 10282
+                      name: עתירת אסיר
+                    - id: 10283
+                      name: שחרור אסור או עצור שלא כדין (הביאס קורפוס)
+                    - id: 10284
+                      name: רשות ערעור אסיר
+                    - id: 10285
+                      name: ערעור עתירת אסיר
+                    - id: 10286
+                      name: דיון נוסף בג"ץ
+                    - id: 10287
+                      name: ערעור על החלטת רשם המפלגות
+                    - id: 10288
+                      name: בקשה להתרת נישואין בעליון
+                    - id: 10289
+                      name: עתירה לגילוי ראיה
+                    - id: 10290
+                      name: נזקי רכב (פח לפח)
+                    - id: 10291
+                      name: תביעה כספית
+                    - id: 10292
+                      name: תביעה לסעד שאינו כספי
+                    - id: 10293
+                      name: נזקי גוף - תביעה אזרחית נגררת לפלילים
+                    - id: 10294
+                      name: ערעור על בית המשפט לעניינים מקומיים
+                    - id: 10295
+                      name: בקשה לאישור עיקול
+                    - id: 10296
+                      name: בקשה לתשלום תכוף
+                    - id: 10297
+                      name: 'קיום צוואה על אף פגם, לפי סעיף 25 לחוק הירושות'
+                    - id: 10298
+                      name: בקשה לתיקון או ביטול צו ירושה
+                    - id: 10299
+                      name: אישור הסכם כאשר אין תביעה תלויה ועומדת
+                    - id: 10300
+                      name: מענק עבודה מועדפת לחייל משוחרר
+                    - id: 10301
+                      name: אסירי ציון
+                    - id: 10302
+                      name: תביעת קופת גמל נגד מעביד או עמית בדיון מהיר
+                    - id: 10303
+                      name: ערעור על ועדת ערר לפי תוכנית ויסקונסין "מהלב"
+                    - id: 10304
+                      name: ערעור על החלטת הממונה על עבודת נשים
+                    - id: 10305
+                      name: סכסוך קיבוצי עם סעד זמני
+                    - id: 10306
+                      name: סעד זמני בלבד
+                    - id: 10307
+                      name: ערעור על ועדה רפואית
+                    - id: 10308
+                      name: הטרדה מינית
+                    - id: 10309
+                      name: חוק שכר שווה
+                    - id: 10310
+                      name: אחר - פטור מאגרה
+                    - id: 10311
+                      name: כללי - לא פטור מאגרה
+                    - id: 10312
+                      name: פסק דין הצהרתי
+                    - id: 10313
+                      name: מינוי אפוטרופוס לעניינים אישיים
+                    - id: 10314
+                      name: מינוי אפוטרופוס לרכוש
+                    - id: 10315
+                      name: דיון מהיר בסמכות רשם
+                    - id: 10316
+                      name: דיון מהיר בסמכות שופט
+                    - id: 10317
+                      name: ערעור על ועדה
+                    - id: 10318
+                      name: מינוי אפוטרופוס לקטין
+                    - id: 10319
+                      name: תביעת גברא
+                    - id: 10320
+                      name: כללי - פטור מאגרה
+                    - id: 10321
+                      name: רשות ערעור על פסק בוררות
+                    - id: 10322
+                      name: תביעה לפינוי מושכר שאינו לפי חוק הגנת הדייר
+                    - id: 10323
+                      name: ערעור רשויות מקומיות
+                    - id: 10324
+                      name: משמעת עובדי מדינה
+                    - id: 10325
+                      name: ועדות משמעת
+                    - id: 10326
+                      name: ערעור על החלטת ראש הוצל"פ
+                    - id: 10327
+                      name: רשות ערעור על החלטת ראש הוצל"פ
+                    - id: 10328
+                      name: אבעיה
+                    - id: 10329
+                      name: ועדת פיצויים לפי חוק כביש חוצה ישראל
+                    - id: 10330
+                      name: תיק כספי - עליון
+                    - id: 10331
+                      name: ביטוח ימי / אווירי
+                    - id: 10332
+                      name: תביעות חוב מוסדיות
+                    - id: 10333
+                      name: החזרים כספיים נגד מוסדות
+                    - id: 10334
+                      name: הטבת נזקי גוף
+                    - id: 10335
+                      name: ערעור בעניין חוק השמות
+                    - id: 10336
+                      name: ערעור בעניין עזבונות
+                    - id: 10337
+                      name: ערעור בעניין חוק קביעת גיל
+                    - id: 10338
+                      name: פירוק העמותה ע"י רשם העמותות
+                    - id: 10339
+                      name: פירוק העמותה ע"י העמותה
+                    - id: 10340
+                      name: מינוי אפוטרופוס להתערבות רפואית דחופה
+                    - id: 10341
+                      name: צו ירושה/קיום צוואה - תושב חוץ
+                    - id: 10342
+                      name: ערעור על תביעת נזקקות
+                    - id: 10343
+                      name: ערעור על החלטת הממונה על עבודות שרות
+                    - id: 10344
+                      name: ערעור על ועדת שחרורים
+                    - id: 10345
+                      name: תביעה לביטול פסק דין
+                    - id: 10346
+                      name: מינוי אפוטרופוס - בקשת היועמ"ש
+                    - id: 10347
+                      name: הסדר נושים לפי סע 19 א
+                    - id: 10348
+                      name: צו יציאה-סע 8 לחוק לניהול מוסדות
+                    - id: 10349
+                      name: צו הפרדה
+                    - id: 10350
+                      name: ערעור מס הכנסה - שנות מס (2)
+                    - id: 10351
+                      name: ערעור מס הכנסה - שנות מס (3)
+                    - id: 10352
+                      name: ערעור מס הכנסה - שנות מס (4)
+                    - id: 10353
+                      name: ערעור מס הכנסה - שנות מס (5)
+                    - id: 10354
+                      name: ערעור מס הכנסה - שנות מס (6)
+                    - id: 10355
+                      name: ערעור מס הכנסה - שנות מס (7)
+                    - id: 10356
+                      name: הסדר מקרקעין
+                    - id: 10357
+                      name: ערעור על ועדת הזכאות לפי חוק יישום תוכנית ההתנתקות
+                    - id: 10358
+                      name: ערעור על הממונה על עבודות שירות
+                    - id: 10359
+                      name: ועדה למתן היתרים
+                    - id: 10360
+                      name: ערר לפי חוק ביטוח נפגעי חיסון
+                    - id: 10361
+                      name: רשות להעברת מושכר בדמי מפתח
+                    - id: 10362
+                      name: אישור פסק בורר - בהסכמה
+                    - id: 10363
+                      name: חיקור דין
+                    - id: 10364
+                      name: ערעור מכוח סעיף 69 לחוק שירות התעסוקה
+                    - id: 10365
+                      name: 'כללי עד 60,000 ש"ח'
+                    - id: 10366
+                      name: 'כללי מעל 60,000 ש"ח'
+                    - id: 10367
+                      name: ועדת ערר- מס הכנסה
+                    - id: 10368
+                      name: ערעור עבודה-גימלאי
+                    - id: 10369
+                      name: ערעור על פס"ד בדיון מהיר
+                    - id: 10370
+                      name: 'ערעור על ועדות רפואיות (גזזת,מס הכנסה)'
+                    - id: 10371
+                      name: על פס"ד ועדת ערר-מס הכנסה
+                    - id: 10372
+                      name: על סכסוך קיבוצי
+                    - id: 10373
+                      name: העברת מקום דיון/איחוד תיקים
+                    - id: 10374
+                      name: ערעור מע"מ - שנות מס (2)
+                    - id: 10375
+                      name: ערעור מע"מ - שנות מס (3)
+                    - id: 10376
+                      name: ערעור מע"מ - שנות מס (4)
+                    - id: 10377
+                      name: ערעור מע"מ - שנות מס (5)
+                    - id: 10378
+                      name: ערעור מע"מ - שנות מס (6)
+                    - id: 10379
+                      name: ערעור מע"מ - שנות מס (7)
+                    - id: 10380
+                      name: נזקי גוף וכספי
+                    - id: 10381
+                      name: ערעור על החלטת רשם הזוגיות
+                    - id: 10382
+                      name: בקשה ליישוב סכסוך - ברית הזוגיות
+                    - id: 10383
+                      name: עתירות שוטרים וסוהרים לפי פרט 20
+                    - id: 10384
+                      name: עתירות אנשי קבע
+                    - id: 10385
+                      name: ערעור לפי סעיף 5 (2)
+                    - id: 10386
+                      name: ערעור לפי סעיף 5 א (2)
+                    - id: 10387
+                      name: עתירה לפי סעיף 5 (1)
+                    - id: 10388
+                      name: עתירה לפי סעיף 5 א (1)
+                    - id: 10389
+                      name: תובענה לפי סעיף 5 (3)
+                    - id: 10390
+                      name: תובענה לפי סעיף 5 א (3)
+                    - id: 10391
+                      name: עיון חוזר בעניין כלכלי
+                    - id: 10392
+                      name: כניסה לישראל מהשטחים
+                    - id: 10393
+                      name: דמי חבר
+                    - id: 10394
+                      name: ערעור על בי"ד משמעתי של עובדי מדינה
+                    - id: 10395
+                      name: ערעור על בי"ד משמעתי של רשויות מקומית
+                    - id: 10396
+                      name: ערעור על בי"ד משמעתי של לשכת עורכי דין
+                    - id: 10397
+                      name: צו מניעה/צו עשה
+                    - id: 10398
+                      name: ערעור לפי סעיף 43 לחוק אריזות
+                    - id: 10399
+                      name: נזקי גוף - רשות הבטחון
+                    - id: 10400
+                      name: צו ביניים לנזקקות
+                    - id: 10401
+                      name: לפי חוק הסדרת העיסוק בייעוץ ובניהול השקעות
+                    - id: 10402
+                      name: תביעה לאבהות/אמהות בהסכמה
+                    - id: 10403
+                      name: עתירות שוטרים וסוהרים לפי פרט 20א
+                    - id: 10404
+                      name: בקשה לחילוט רכוש (פרקליט מחוז)
+                    - id: 10405
+                      name: חוק הגנה על עדים
+                    - id: 10406
+                      name: ערעור על החלטת נשיא שלום להעברת תיק
+                    - id: 10407
+                      name: ערעור על החלטת מנהל בתי המשפט להעברת תיק
+                    - id: 10408
+                      name: נזקי גוף - רשלנות רפואית
+                    - id: 10450
+                      name: התרת נישואין
+                    - id: 10517
+                      name: לבקשת נושה
+                    - id: 10518
+                      name: לבקשת חייב
+                    - id: 10519
+                      name: העברה מהוצל"פ עפ"י חוק
+                    - id: 10520
+                      name: העברה מהוצל"פ ברשות
+                    - id: 10521
+                      name: ערעור על החלטת נאמן
+                    - id: 10522
+                      name: ערעור על החלטת  רשם הוצל"פ
+                    - id: 10523
+                      name: ערעור על החלטה סופית של הממונה
+                    - id: 10524
+                      name: ערעור על החלטה אחרת של הממונה
+                    - id: 10525
+                      name: ערעור על פסק דין של בימ"ש שלום
+                    - id: 10526
+                      name: ערעור על החלטה אחרת של בימ"ש שלום
+      operationId: getInterests
+      description: Returns the list of available Interest types.
+  /entities:
+    x-map: entities
+    x-delay: 100
+    get:
+      summary: Listing Entity types
+      tags:
+        - entities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityTypeDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: בקשות
+                    - id: 2
+                      name: החלטות
+                    - id: 3
+                      name: דיונים
+                    - id: 4
+                      name: צוים
+                    - id: 5
+                      name: מסמכים
+                    - id: 6
+                      name: פסקי דין
+                    - id: 7
+                      name: חוקי שיבוץ
+                    - id: 8
+                      name: הגשות
+                    - id: 9
+                      name: עונשים
+                    - id: 10
+                      name: כספית
+                    - id: 11
+                      name: תיקים
+                    - id: 12
+                      name: גורמים בתיק
+                    - id: 13
+                      name: מוצגים
+                    - id: 14
+                      name: גורמים
+                    - id: 15
+                      name: המצאות
+                    - id: 16
+                      name: פרוטוקול
+                    - id: 17
+                      name: שוברים
+                    - id: 18
+                      name: כתבי טענות
+                    - id: 19
+                      name: פנית מזכירות
+                    - id: 20
+                      name: הליך משני
+                    - id: 21
+                      name: תורנויות
+                    - id: 22
+                      name: העדרויות
+                    - id: 23
+                      name: קנסות
+                    - id: 24
+                      name: פקדונות
+                    - id: 25
+                      name: חובות
+                    - id: 26
+                      name: החזרים
+                    - id: 27
+                      name: טבלאות מערכת
+                    - id: 28
+                      name: סעיפי אישום
+                    - id: 29
+                      name: החלטות בהרכב
+                    - id: 30
+                      name: המצאה לנמען
+                    - id: 31
+                      name: מבנה ארגוני
+                    - id: 32
+                      name: תיק חיצוני
+                    - id: 33
+                      name: פגישות
+                    - id: 34
+                      name: עיקולים
+                    - id: 35
+                      name: מסמכים לבדיקת מזכירות
+      operationId: getEntities
+      description: Returns the list of available Entity types.
+  /privileges:
+    x-map: privileges
+    x-delay: 100
+    get:
+      summary: Listing Privileges types
+      tags:
+        - privileges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrivilegeDto'
+              examples:
+                example-1:
+                  value:
+                    - id: 2
+                      name: 'חסוי לציבור, פתוח לצדדים'
+                    - id: 3
+                      name: 'חסוי לציבור, פתוח לצד א'''
+                    - id: 4
+                      name: 'חסוי לציבור, פתוח לצד ב'''
+                    - id: 5
+                      name: 'חסוי בפני הכל, פתוח לשופט וצוותו'
+      operationId: getPrivileges
+      description: Returns the list of available Privilege types.
+components:
+  schemas:
+    SearchResultItemDto:
+      title: SearchResultItemDto
+      type: object
+      description: Describes the particular searched result item related to found document.
+      properties:
+        fragments:
+          type: array
+          uniqueItems: true
+          x-minItems: 3
+          x-maxItems: 4
+          items:
+            $ref: '#/components/schemas/SearchResultItemFragmentDto'
+        ranks:
+          type: array
+          x-minItems: 1
+          x-maxItems: 3
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/RankDto'
+        entities:
+          type: array
+          x-minItems: 0
+          x-maxItems: 12
+          items:
+            $ref: '#/components/schemas/EntityDto'
+        relatedCases:
+          type: array
+          x-minItems: 0
+          x-maxItems: 12
+          items:
+            $ref: '#/components/schemas/CaseReferenceDto'
+        privilege:
+          type: integer
+          x-faker:
+            value.from:
+              x-ref: privileges
+              property: id
+        document:
+          $ref: '#/components/schemas/DocumentReferenceDto'
+        mainCase:
+          $ref: '#/components/schemas/CaseReferenceDto'
+        applicableFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterReferenceDto'
+          x-link:
+            - courts
+            - courts_levels
+            - interests
+            - procedures
+            - proceedings
+      required:
+        - fragments
+        - ranks
+        - entities
+        - relatedCases
+        - privilege
+        - document
+        - mainCase
+        - applicableFilters
+    SearchResultDto:
+      title: SearchResultDto
+      description: Contains both the whole search result statistics for the documents 
+                   search attempt and the list of particular results referencing found documents as well. 
+                   The list of particular results items is constrained with number of items requested
+                   and the number of item to start.
+      type: object
+      properties:
+        items:
+          type: array
+          uniqueItems: true
+          x-minItems: 100
+          x-maxItems: 200
+          items:
+            $ref: '#/components/schemas/SearchResultItemDto'
+        start:
+          type: number
+          example: 0
+          minimum: 0
+          description: The position of the first item returned in whole results array.
+        end:
+          type: number
+          example: 0
+          minimum: 0
+          description: The position of the last item returned in whole results array.
+        total:
+          type: number
+          minimum: 0
+          example: 999
+          description: The number of the search result items found.
+        executionTime:
+          type: number
+          format: float
+          example: 0.456
+          minimum: 0
+          description: The query execution time.
+        distributionByFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterStatsDto'
+          x-link:
+            - courts
+            - courts_levels
+            - interests
+            - procedures
+            - proceedings
+      required:
+        - items
+        - start
+        - end
+        - total
+        - executionTime
+        - distributionByFilters
+    SearchResultItemFragmentDto:
+      title: SearchResultItemFragmentDto
+      type: object
+      properties:
+        text:
+          type: string
+          description: Represents a text of the fragment.
+          x-faker:
+            custom.words:
+              - 12
+              - 32
+        highlights:
+          type: array
+          x-minItems: 0
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/HighlightedPhraseDto'
+      required:
+        - text
+        - highlights
+    HighlightedPhraseDto:
+      title: HighlightedPhraseDto
+      type: object
+      properties:
+        start:
+          type: number
+          example: 2
+          minimum: 0
+          description: The starting position
+        count:
+          type: number
+          description: Indicates how many words (tokens) need to highlight
+          example: 1
+          minimum: 1
+          default: 1
+      required:
+        - start
+        - count
+      description: Represents a highlighted part of the related text.
+    RankDto:
+      title: RankDto
+      type: object
+      properties:
+        name:
+          type: string
+          x-faker:
+            custom.randomValue:
+              - הכול
+              - החלטות
+              - פרוטוקולים
+        value:
+          type: number
+          format: float
+          maximum: 10
+          minimum: 0
+      required:
+        - name
+        - value
+    CourtDto:
+      title: CourtDto
+      type: object
+      description: Represents the Court DTO.
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 2
+          x-faker:
+            lorem.words: 1
+        levelId:
+          type: integer
+          x-faker:
+            value.from:
+              x-ref: courts_levels
+              property: id
+      required:
+        - id
+        - name
+        - level
+    EntityDto:
+      title: EntityDto
+      type: object
+      x-link:
+        - entities
+      properties:
+        id:
+          type: integer
+          x-link: id
+        value:
+          type: string
+          minLength: 0
+          x-link: name
+      required:
+        - id
+        - value
+    CaseReferenceDto:
+      title: CaseReferenceDto
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          maximum: 10000
+        privilege:
+          type: string
+          x-faker:
+            value.from:
+              x-ref: privileges
+              property: name
+        court:
+          type: string
+          x-faker:
+            value.from:
+              x-ref: courts
+              property: name
+        courtLevel:
+          type: string
+          x-faker:
+            value.from:
+              x-ref: courts_levels
+              property: name
+        name:
+          type: string
+        number:
+          type: string
+          x-faker: custom.caseNumber
+      required:
+        - id
+        - privilege
+        - court
+        - courtLevel
+        - name
+        - number
+    CourtLevelDto:
+      title: CourtLevelDto
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+        - id
+        - name
+    DocumentReferenceDto:
+      title: DocumentReferenceDto
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          maximum: 10000
+        title:
+          type: string
+      required:
+        - id
+        - title
+    FilterReferenceDto:
+      title: FilterReferenceDto
+      type: object
+      properties:
+        key:
+          type: number
+          x-link: $index
+        value:
+          type: integer
+          x-link: id
+      required:
+        - key
+        - value
+    FilterStatsDto:
+      title: FilterStatsDto
+      type: object
+      properties:
+        key:
+          type: integer
+          x-link: $index
+        values:
+          type: array
+          uniqueItems: true
+          x-link: $name
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                x-link: id
+              frequency:
+                type: number
+                minimum: 0
+                maximum: 10
+            required:
+              - id
+              - frequency
+      required:
+        - key
+        - values
+    QueryDto:
+      title: QueryDto
+      type: object
+      description: ''
+      properties:
+        q:
+          type: string
+          minLength: 1
+          maxLength: 256
+          example: Some search phrase goes here
+        num:
+          description: The number of results per page.
+          default: 10
+          example: 100
+          type: integer
+        start:
+          type: integer
+          description: |
+            The number indicating a start index of the result.
+          example: 0
+          default: 0
+          minimum: 0
+        source:
+          type: string
+          enum:
+            - decisions
+            - protocols
+        searchInTitles:
+          type: boolean
+        searchInContent:
+          type: boolean
+        searchInMemoTitles:
+          type: boolean
+        searchInMemoContent:
+          type: boolean
+        dateRangeType:
+          type: string
+          enum:
+            - 1h
+            - 24h
+            - 1w
+            - 1m
+            - 1y
+            - custom
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        hasAppeal:
+          type: boolean
+          default: false
+        legalCase:
+          type: boolean
+          default: false
+        courtId:
+          type: integer
+        courtLevel:
+          type: integer
+        interest:
+          type: integer
+        procedure:
+          type: integer
+        proceeding:
+          type: integer
+        privilege:
+          type: integer
+        entity:
+          type: integer
+      required:
+        - q
+        - num
+        - start
+    ProcedureDto:
+      title: ProcedureDto
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          format: int64
+        name:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - name
+      x-examples:
+        example-1:
+          id: 1
+          name: string
+    ProceedingDto:
+      title: ProceedingDto
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - name
+    EntityTypeDto:
+      title: EntityTypeDto
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          format: int64
+        name:
+          type: string
+      required:
+        - id
+        - name
+    InterestDto:
+      title: InterestDto
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+        - id
+        - name
+    PrivilegeDto:
+      title: PrivilegeDto
+      type: object
+      description: Represents the Privilege definition.
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - name

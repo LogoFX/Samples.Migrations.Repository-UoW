@@ -1,0 +1,80 @@
+﻿[System.CodeDom.Compiler.GeneratedCode("NSwag", "{{ ToolchainVersion }}")]
+{% if HasBasePath -%}
+{%     if IsAspNetCore -%}
+[{{ AspNetNamespace }}.Route("{{ BasePath }}")]
+{%     else -%}
+[{{ AspNetNamespace }}.RoutePrefix("{{ BasePath }}")]
+{%     endif -%}
+{% endif -%}
+{% if GeneratePartialControllers -%}
+{% template Controller.Class.Annotations %}
+public partial class {{ Class }}Controller : {% if HasBaseClass %}{{ BaseClass }}{% else %}{{ AspNetNamespace }}.{% if IsAspNetCore %}ControllerBase{% else %}ApiController{% endif %}{% endif %}
+{
+
+{%     for operation in Operations -%}
+{%         if operation.HasSummary -%}
+    /// <summary>{{ operation.Summary | csharpdocs }}</summary>
+{%         endif -%}
+{%         for parameter in operation.Parameters -%}
+{%             if parameter.HasDescription -%}
+    /// <param name="{{ parameter.VariableName }}">{{ parameter.Description | csharpdocs }}</param>
+{%             endif -%}
+{%         endfor -%}
+{%         if operation.HasResultDescription -%}
+    /// <returns>{{ operation.ResultDescription | csharpdocs }}</returns>
+{%         endif -%}
+{%         if operation.IsDeprecated -%}
+    [System.Obsolete]
+{%         endif -%}
+    private partial System.Threading.Tasks.Task<System.Web.Http.IHttpActionResult> {{ operation.ActualOperationName }}ImplementationAsync({% for parameter in operation.Parameters %}{{ parameter.TypeInControllerInterface }} {{ parameter.VariableName }}{% if parameter.IsLast == false or UseCancellationToken %}, {% endif %}{% endfor %}{% if UseCancellationToken %}System.Threading.CancellationToken cancellationToken{% endif %});
+	
+{%      endfor -%}
+{%     for operation in Operations -%}	
+{%         if operation.HasSummary -%}
+    /// <summary>{{ operation.Summary | csharpdocs }}</summary>
+{%         endif -%}
+{%         for parameter in operation.Parameters -%}
+{%             if parameter.HasDescription -%}
+    /// <param name="{{ parameter.VariableName }}">{{ parameter.Description | csharpdocs }}</param>
+{%             endif -%}
+{%         endfor -%}
+{%         if operation.HasResultDescription -%}
+    /// <returns>{{ operation.ResultDescription | csharpdocs }}</returns>
+{%         endif -%}
+{%         if operation.IsDeprecated -%}
+    [System.Obsolete]
+{%         endif -%}
+    {% template Controller.Method.Annotations %}
+    [{{ AspNetNamespace }}.Http{{ operation.HttpMethodUpper }}, {{ AspNetNamespace }}.Route("{{ operation.Path }}"{% if operation.HasRouteName %}, Name = "{{ operation.RouteName }}"{% endif %})]
+    public System.Threading.Tasks.Task<System.Web.Http.IHttpActionResult> {{ operation.ActualOperationName }}({% for parameter in operation.Parameters %}{% if parameter.IsQuery %}[{{ AspNetNamespace }}.{% if IsAspNetCore -%}FromQuery{% else -%}FromUri{% endif -%}{% if parameter.IsValidIdentifier == false %}(Name = "{{ parameter.Name }}"){% endif %}] {% endif %}{% if parameter.IsHeader %}[{% if IsAspNetCore -%}{{ AspNetNamespace }}.{% endif -%}FromHeader{% if parameter.IsValidIdentifier == false %}(Name = "{{ parameter.Name }}"){% endif %}] {% endif %}{% if parameter.IsBody and parameter.IsBinaryBody == false %}[{{ AspNetNamespace }}.FromBody] {% endif %}{% if GenerateModelValidationAttributes and parameter.IsRequired %}[{{ RequiredAttributeType }}] {% endif %}{{ parameter.Type }} {{ parameter.VariableName }}{% if GenerateOptionalParameters and parameter.IsOptional %} = null{% endif %}{% if parameter.IsLast == false or UseCancellationToken %}, {% endif %}{% endfor %}{% if UseCancellationToken %}System.Threading.CancellationToken cancellationToken = default{% endif %})
+    {
+        return {{ operation.ActualOperationName }}ImplementationAsync({% for parameter in operation.Parameters %}{{ parameter.VariableName }}{% if parameter.HasDefault %} ?? {{parameter.Default}}{% endif %}{% if parameter.IsLast == false or UseCancellationToken %}, {% endif %}{% endfor %}{% if UseCancellationToken %}cancellationToken{% endif %});
+    }
+{%     endfor -%}
+}
+{% elseif GenerateAbstractControllers -%}
+{% template Controller.Class.Annotations %}
+public abstract class {{ Class }}ControllerBase : {% if HasBaseClass %}{{ BaseClass }}{% else %}{{ AspNetNamespace }}.{% if IsAspNetCore %}ControllerBase{% else %}ApiController{% endif %}{% endif %}
+{
+{%     for operation in Operations -%}
+{%         if operation.HasSummary -%}
+    /// <summary>{{ operation.Summary | csharpdocs }}</summary>
+{%         endif -%}
+{%         for parameter in operation.Parameters -%}
+{%             if parameter.HasDescription -%}
+    /// <param name="{{ parameter.VariableName }}">{{ parameter.Description | csharpdocs }}</param>
+{%             endif -%}
+{%         endfor -%}
+{%         if operation.HasResultDescription -%}
+    /// <returns>{{ operation.ResultDescription | csharpdocs }}</returns>
+{%         endif -%}
+{%         if operation.IsDeprecated -%}
+    [System.Obsolete]
+{%         endif -%}
+    {% template Controller.Method.Annotations %}
+    [{{ AspNetNamespace }}.Http{{ operation.HttpMethodUpper }}, {{ AspNetNamespace }}.Route("{{ operation.Path }}"{% if operation.HasRouteName %}, Name = "{{ operation.RouteName }}"{% endif %})]
+    public abstract {%  if operation.WrapResponse %}System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage>{% else %}{{ operation.ResultType }}{% endif %} {{ operation.ActualOperationName }}({% for parameter in operation.Parameters %}{% if parameter.IsQuery %}[{{ AspNetNamespace }}.{% if IsAspNetCore -%}FromQuery{% else -%}FromUri{% endif -%}{% if parameter.IsValidIdentifier == false %}(Name = "{{ parameter.Name }}"){% endif %}] {% endif %}{% if parameter.IsHeader %}[{% if IsAspNetCore -%}{{ AspNetNamespace }}.{% endif -%}FromHeader{% if parameter.IsValidIdentifier == false %}(Name = "{{ parameter.Name }}"){% endif %}] {% endif %}{% if parameter.IsBody and parameter.IsBinaryBody == false %}[{{ AspNetNamespace }}.FromBody] {% endif %}{% if GenerateModelValidationAttributes and parameter.IsRequired %}[{{ RequiredAttributeType }}] {% endif %}{{ parameter.Type }} {{ parameter.VariableName }}{% if parameter.HasDefault %} = {{parameter.Default}}{% endif %}{% if GenerateOptionalParameters and parameter.IsOptional and parameter.HasDefault == false %} = null{% endif %}{% if parameter.IsLast == false or UseCancellationToken %}, {% endif %}{% endfor %}{% if UseCancellationToken %}System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken){% endif %});
+
+{%     endfor -%}
+}
+{% endif -%}

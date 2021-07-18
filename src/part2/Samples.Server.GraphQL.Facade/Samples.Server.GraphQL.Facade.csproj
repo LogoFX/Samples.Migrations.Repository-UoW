@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+    <PackageReference Include="LogoFX.Server.Bootstrapping" Version="2.2.0" />
+    <PackageReference Include="Solid.Practices.Modularity" Version="2.3.1" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\LogoFX.Data.Repository\LogoFX.Data.Repository.csproj" />
+    <ProjectReference Include="..\Samples.Server.Data.Context.AdoDotNet\Samples.Server.Data.Context.AdoDotNet.csproj" />
+    <ProjectReference Include="..\Samples.Server.Data.Context.EntityFramework\Samples.Server.Data.Context.EntityFramework.csproj" />
+    <ProjectReference Include="..\Samples.Server.Domain.Contracts\Samples.Server.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\Samples.Server.Domain.Implementation\Samples.Server.Domain.Implementation.csproj" />
+  </ItemGroup>
+
+</Project>

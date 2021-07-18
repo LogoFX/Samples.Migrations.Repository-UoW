@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CheckFileHasModified": {
+      "commandName": "Project",
+      "commandLineArgs": "c:\\Temp\\test.txt"
+    }
+  }
+}

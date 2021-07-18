@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "YamlToNSwag": {
+      "commandName": "Project",
+      "commandLineArgs": "c:\\Projects\\LogoUI\\elastic-search-api\\src\\part1\\Ngcs.ElasticSearch.Api\\Controllers\\api\\api.yaml c:\\Projects\\LogoUI\\elastic-search-api\\src\\part1\\Ngcs.ElasticSearch.Api\\Controllers\\api\\es-api.nswag"
+    }
+  }
+}
