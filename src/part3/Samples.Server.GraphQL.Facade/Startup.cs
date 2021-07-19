@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Ngcs.Server.GraphQL.Facade;
 using Solid.Bootstrapping;
 using BootstrapperBase = LogoFX.Server.Bootstrapping.BootstrapperBase;
 

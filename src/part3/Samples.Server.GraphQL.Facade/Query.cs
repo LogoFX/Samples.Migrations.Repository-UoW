@@ -4,7 +4,7 @@ using HotChocolate;
 using Samples.Server.Domain.Contracts;
 using Samples.Server.Domain.Entities;
 
-namespace Ngcs.Server.GraphQL.Facade
+namespace Samples.Server.GraphQL.Facade
 {
 	public sealed class Query
 	{
