@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: elastic-search-ui-api
+  title: server-api
   version: '1.0'
   contact:
     name: David Kossoglyad
     email: david@logoui.co.il
-  description: The API is useful to retrieve the search results from NGCS document storage.
+  description: The API is useful to retrieve the search results from document storage.
 tags:
   - name: search
     description: TBD
@@ -14,7 +14,7 @@ tags:
   - name: entities
     description: Listing Entity types
   - name: interests
-    description: Listiting Interest types
+    description: Listing Interest types
   - name: privileges
     description: Listing Privileges types
   - name: proceedings
