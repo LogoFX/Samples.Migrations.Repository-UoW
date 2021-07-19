@@ -15,9 +15,9 @@ Also it uses Node.js and NPM. Before launch the application you may run ```/devo
 1. Create database using ```Ngcs.ElasticSearch.SampleDB``` project.
    1. Build the database project.
    1. Launch 'publish' command.
-   ![alt text](/public/img/image01.png)
+   ![Publish Settings](/public/img/image01.png)
    1. Choose connection.
-   ![alt text](/public/img/image02.png)
+   ![Connection Settings](/public/img/image02.png)
    1. In field "Database Name" type new database name (i. e. SampleDatabase2).
    1. Press "OK".
    1. Press "Publish".
@@ -47,7 +47,9 @@ There are two debug build configurations: ```DebugAdoNet``` and ```DebugEF```. I
 
 ### Ngcs.Server.Facade
 
-In root of the project edit ```WebConnectionString.config``` file. Set connection string named ```appEntities```.
+In root of the project edit ```WebConnectionString.config``` file. Set connection string named ```appEntities```. In project properties open Web settings and set "Start URL" to open "/swagger" page (i. e. http://localhost:65347/swagger).
+
+![Web Settings](/public/img/image03.png)
 
 ### Ngcs.Server.GraphQL.Facade
 
