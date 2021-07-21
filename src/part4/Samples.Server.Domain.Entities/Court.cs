@@ -6,7 +6,11 @@ namespace Samples.Server.Domain.Entities
     public class Court
     {
         public int Id { [UsedImplicitly] get; set; }
+        
         public string Name { [UsedImplicitly] get; set; }
+        
+        public int LevelId { get; set; }
+
         public CourtLevel Level { [UsedImplicitly] get; set; }
     }
 }
