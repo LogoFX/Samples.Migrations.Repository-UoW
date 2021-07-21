@@ -57,7 +57,7 @@ SELECT id, name FROM CourtLevels WHERE (id = @id)</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CourtsTableAdapter" GeneratorDataComponentClassName="CourtsTableAdapter" Name="Courts" UserDataComponentName="CourtsTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="ES_SAMPLEConnectionString (Settings)" DbObjectName="[ES-SAMPLE].dbo.Courts" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="ES_SAMPLEConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Courts] WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([levelId] = @Original_levelId))</CommandText>
@@ -81,7 +81,9 @@ SELECT id, name, levelId FROM Courts WHERE (id = @id)</CommandText>
                 </InsertCommand>
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT id, name, levelId FROM dbo.Courts</CommandText>
+                    <CommandText>SELECT        Courts.*, CourtLevels.name AS courtLevelName
+FROM            Courts INNER JOIN
+                         CourtLevels ON Courts.levelId = CourtLevels.id</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -105,6 +107,7 @@ SELECT id, name, levelId FROM Courts WHERE (id = @id)</CommandText>
               <Mapping SourceColumn="id" DataSetColumn="id" />
               <Mapping SourceColumn="name" DataSetColumn="name" />
               <Mapping SourceColumn="levelId" DataSetColumn="levelId" />
+              <Mapping SourceColumn="courtLevelName" DataSetColumn="courtLevelName" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -113,10 +116,32 @@ SELECT id, name, levelId FROM Courts WHERE (id = @id)</CommandText>
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
+  <xs:element name="Courts" msprop:Generator_TableClassName="CourtsDataTable" msprop:Generator_TableVarName="tableCourts" msprop:Generator_RowChangedName="CourtsRowChanged" msprop:Generator_TablePropName="Courts" msprop:Generator_RowDeletingName="CourtsRowDeleting" msprop:Generator_RowChangingName="CourtsRowChanging" msprop:Generator_RowEvHandlerName="CourtsRowChangeEventHandler" msprop:Generator_RowDeletedName="CourtsRowDeleted" msprop:Generator_RowClassName="CourtsRow" msprop:Generator_UserTableName="Courts" msprop:Generator_RowEvArgName="CourtsRowChangeEvent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+        <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="50" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="levelId" msprop:Generator_ColumnVarNameInTable="columnlevelId" msprop:Generator_ColumnPropNameInRow="levelId" msprop:Generator_ColumnPropNameInTable="levelIdColumn" msprop:Generator_UserColumnName="levelId" type="xs:int" />
+        <xs:element name="courtLevelName" msprop:Generator_ColumnVarNameInTable="columncourtLevelName" msprop:Generator_ColumnPropNameInRow="courtLevelName" msprop:Generator_ColumnPropNameInTable="courtLevelNameColumn" msprop:Generator_UserColumnName="courtLevelName">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="50" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SampleDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="SampleDataSet" msprop:Generator_UserDSName="SampleDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="CourtLevels" msprop:Generator_TableClassName="CourtLevelsDataTable" msprop:Generator_TableVarName="tableCourtLevels" msprop:Generator_TablePropName="CourtLevels" msprop:Generator_RowDeletingName="CourtLevelsRowDeleting" msprop:Generator_RowChangingName="CourtLevelsRowChanging" msprop:Generator_RowEvHandlerName="CourtLevelsRowChangeEventHandler" msprop:Generator_RowDeletedName="CourtLevelsRowDeleted" msprop:Generator_UserTableName="CourtLevels" msprop:Generator_RowChangedName="CourtLevelsRowChanged" msprop:Generator_RowEvArgName="CourtLevelsRowChangeEvent" msprop:Generator_RowClassName="CourtLevelsRow">
+        <xs:element name="CourtLevels" msprop:Generator_TableClassName="CourtLevelsDataTable" msprop:Generator_TableVarName="tableCourtLevels" msprop:Generator_RowChangedName="CourtLevelsRowChanged" msprop:Generator_TablePropName="CourtLevels" msprop:Generator_RowDeletingName="CourtLevelsRowDeleting" msprop:Generator_RowChangingName="CourtLevelsRowChanging" msprop:Generator_RowEvHandlerName="CourtLevelsRowChangeEventHandler" msprop:Generator_RowDeletedName="CourtLevelsRowDeleted" msprop:Generator_RowClassName="CourtLevelsRow" msprop:Generator_UserTableName="CourtLevels" msprop:Generator_RowEvArgName="CourtLevelsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
@@ -130,21 +155,7 @@ SELECT id, name, levelId FROM Courts WHERE (id = @id)</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Courts" msprop:Generator_TableClassName="CourtsDataTable" msprop:Generator_TableVarName="tableCourts" msprop:Generator_TablePropName="Courts" msprop:Generator_RowDeletingName="CourtsRowDeleting" msprop:Generator_RowChangingName="CourtsRowChanging" msprop:Generator_RowEvHandlerName="CourtsRowChangeEventHandler" msprop:Generator_RowDeletedName="CourtsRowDeleted" msprop:Generator_UserTableName="Courts" msprop:Generator_RowChangedName="CourtsRowChanged" msprop:Generator_RowEvArgName="CourtsRowChangeEvent" msprop:Generator_RowClassName="CourtsRow">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="levelId" msprop:Generator_ColumnVarNameInTable="columnlevelId" msprop:Generator_ColumnPropNameInRow="levelId" msprop:Generator_ColumnPropNameInTable="levelIdColumn" msprop:Generator_UserColumnName="levelId" type="xs:int" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
+        <xs:element ref="Courts" />
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">

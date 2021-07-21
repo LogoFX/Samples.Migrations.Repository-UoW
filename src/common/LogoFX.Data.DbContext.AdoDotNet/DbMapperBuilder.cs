@@ -42,12 +42,6 @@ namespace LogoFX.Data.DbContext.AdoDotNet
             _mapInfoDictionary.Add(typeof(TEntity), new MapInfo<TEntity, TAdapter, TDataTable>(convertFunc));
         }
 
-        private IMapInfo<TEntity> GetInfo<TEntity>() 
-            where TEntity : class
-        {
-            return (IMapInfo<TEntity>) _mapInfoDictionary[typeof(TEntity)];
-        }
-
         public DataTable GetDataTable<TEntity>()
             where TEntity : class
         {
@@ -63,6 +57,19 @@ namespace LogoFX.Data.DbContext.AdoDotNet
             {
                 yield return info.ConvertFunc(row);
             }
+        }
+
+        public TEntity Convert<TEntity>(DataRow dataRow)
+            where TEntity : class
+        {
+            var info = GetInfo<TEntity>();
+            return info.ConvertFunc(dataRow);
+        }
+
+        private IMapInfo<TEntity> GetInfo<TEntity>()
+            where TEntity : class
+        {
+            return (IMapInfo<TEntity>)_mapInfoDictionary[typeof(TEntity)];
         }
 
         private T GetDataObject<T, TEntity>(IDictionary<Type, T> dictionary, Func<T> createFunc)

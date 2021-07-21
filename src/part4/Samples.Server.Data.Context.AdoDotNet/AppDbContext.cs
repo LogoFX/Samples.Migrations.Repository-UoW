@@ -36,7 +36,11 @@ namespace Samples.Server.Data.Context.AdoDotNet
                 {
                     Id = courtsRow.id,
                     Name = courtsRow.name,
-                    LevelId = courtsRow.levelId
+                    Level = new CourtLevel
+                    {
+                        Id = courtsRow.levelId,
+                        Name = courtsRow.courtLevelName
+                    }
                 };
             });
 

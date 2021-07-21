@@ -42,12 +42,10 @@ namespace Samples.Server.Api.Controllers
         /// <returns>OK</returns>
         private async partial Task<IHttpActionResult> GetCourtsImplementationAsync(CancellationToken cancellationToken)
         {
-            var courtLevels = await _courtLevelsService.GetCourtLevelsAsync(cancellationToken).ConfigureAwait(false);
             var courts = await _courtsService.GetCourtsAsync(cancellationToken).ConfigureAwait(false);
             return Ok(courts.Select(court =>
             {
                 var courtDto = _courtMapper.MapToCourtDto(court);
-                courtDto.Level = _courtMapper.MapToCourtLevelDto(courtLevels.Single(level => level.Id == court.LevelId));
                 return courtDto;
             }));
         }

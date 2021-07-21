@@ -594,6 +594,8 @@ namespace Samples.Server.Data.Context.AdoDotNet {
             
             private global::System.Data.DataColumn columnlevelId;
             
+            private global::System.Data.DataColumn columncourtLevelName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public CourtsDataTable() {
@@ -653,6 +655,14 @@ namespace Samples.Server.Data.Context.AdoDotNet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn courtLevelNameColumn {
+                get {
+                    return this.columncourtLevelName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -688,12 +698,13 @@ namespace Samples.Server.Data.Context.AdoDotNet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public CourtsRow AddCourtsRow(int id, string name, int levelId) {
+            public CourtsRow AddCourtsRow(int id, string name, int levelId, string courtLevelName) {
                 CourtsRow rowCourtsRow = ((CourtsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
                         name,
-                        levelId};
+                        levelId,
+                        courtLevelName};
                 rowCourtsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCourtsRow);
                 return rowCourtsRow;
@@ -726,6 +737,7 @@ namespace Samples.Server.Data.Context.AdoDotNet {
                 this.columnid = base.Columns["id"];
                 this.columnname = base.Columns["name"];
                 this.columnlevelId = base.Columns["levelId"];
+                this.columncourtLevelName = base.Columns["courtLevelName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -737,6 +749,8 @@ namespace Samples.Server.Data.Context.AdoDotNet {
                 base.Columns.Add(this.columnname);
                 this.columnlevelId = new global::System.Data.DataColumn("levelId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnlevelId);
+                this.columncourtLevelName = new global::System.Data.DataColumn("courtLevelName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncourtLevelName);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AllowDBNull = false;
@@ -744,6 +758,8 @@ namespace Samples.Server.Data.Context.AdoDotNet {
                 this.columnname.AllowDBNull = false;
                 this.columnname.MaxLength = 50;
                 this.columnlevelId.AllowDBNull = false;
+                this.columncourtLevelName.AllowDBNull = false;
+                this.columncourtLevelName.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -951,6 +967,17 @@ namespace Samples.Server.Data.Context.AdoDotNet {
                 }
                 set {
                     this[this.tableCourts.levelIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string courtLevelName {
+                get {
+                    return ((string)(this[this.tableCourts.courtLevelNameColumn]));
+                }
+                set {
+                    this[this.tableCourts.courtLevelNameColumn] = value;
                 }
             }
         }
@@ -1471,6 +1498,7 @@ namespace Samples.Server.Data.Context.AdoDotNet.SampleDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("levelId", "levelId");
+            tableMapping.ColumnMappings.Add("courtLevelName", "courtLevelName");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -1515,7 +1543,9 @@ namespace Samples.Server.Data.Context.AdoDotNet.SampleDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT id, name, levelId FROM dbo.Courts";
+            this._commandCollection[0].CommandText = "SELECT        Courts.*, CourtLevels.name AS courtLevelName\r\nFROM            Court" +
+                "s INNER JOIN\r\n                         CourtLevels ON Courts.levelId = CourtLeve" +
+                "ls.id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1792,21 +1822,21 @@ namespace Samples.Server.Data.Context.AdoDotNet.SampleDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private int UpdateUpdatedRows(SampleDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._courtLevelsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.CourtLevels.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._courtLevelsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._courtsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Courts.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._courtsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._courtLevelsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.CourtLevels.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._courtLevelsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -1820,19 +1850,19 @@ namespace Samples.Server.Data.Context.AdoDotNet.SampleDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private int UpdateInsertedRows(SampleDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._courtLevelsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.CourtLevels.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._courtLevelsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._courtsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Courts.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._courtsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._courtLevelsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.CourtLevels.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._courtLevelsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -1846,19 +1876,19 @@ namespace Samples.Server.Data.Context.AdoDotNet.SampleDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private int UpdateDeletedRows(SampleDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._courtsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Courts.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._courtsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._courtLevelsTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.CourtLevels.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._courtLevelsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._courtsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Courts.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._courtsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
