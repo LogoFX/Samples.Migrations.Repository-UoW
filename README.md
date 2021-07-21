@@ -74,3 +74,7 @@ There 3 step parts.
 
 * Both API and GraphQL projects use different modules to access to database due selected solution build configuration.
 * Entities, models and data service are configured to work with two kind of data objects: ```Court```, ```CourtLevel```.
+
+## Part 4
+
+* ```Court``` entity has nested property ```Level``` which linked to ```CourtLevels``` table via ```LevelId``` foreign key.
