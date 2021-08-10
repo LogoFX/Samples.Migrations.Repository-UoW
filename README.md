@@ -1,23 +1,28 @@
-# Samples Migrations Repository Unity Of Work
-Sample of ASP.NET Web API 2 Web API server application (in 3 parts) to demonstrate usage of automatic server code generation based on YAML schema. There are several methods to access to database.
+# The Sample: How to migrate from ADO.NET to Entity Framework using the Repository and Unit of Work design patterns
+
+The step by step sample shows how to create a minimalistic ASP.NET Web API 2 Web API server application using following best practices:
+* The Modularity — To build the solution with REALLY independent modules (aka, assemblies, projects)
+* The Automation — To automate development tasks, like as a builds, code generation, etc.
+* The Standards — To use all the power of OpenAPI standards, automatic code generation for service facades and clients (Single Source of Truth)
+* The Migration - To build the data access layer such as it could allow migration from ADO.NET to EF (it's necessary for future migration from .NET Framework to .NET 5.0) as easy as possible.
+* The bonus — The GraphQL endpoint project built on top of .NET. 5.0 framework, but using same infrastructures developed with .NET Framework 4.7.2.
 
 ## Prerequisites
 
-The application was made for .NET 4.7.2 / .NET 5.0 and Visual Studio 2019.
-
-Also it uses Node.js and NPM. Before launch the application you may run ```/devops/run-once.cmd``` to install necessary packages.
+1. Microsoft .NET Framework v.4.7.2 or above;
+2. .NET Framework v.5.0 or above;
+3. NodeJs ≥v.14;
+4. Visual Studio 2019.
 
 ## How to start
 
-1. Install Node.js (ver. >= 14) and npm package manager.
 1. Run ```/devops/run-once.cmd```. It installs globally nswag package.
-1. Open the solution in the Visual Studio 2019.
-1. Create database using ```Samples.Server.SampleDB``` project.
-   1. Build the database project.
-   1. Launch 'publish' command.   
+2. Open the solution in the Visual Studio 2019.
+3. Create database using ```Samples.Server.SampleDB``` project.
+   3.1. Build the database project.
+   3.2. Launch 'publish' command.
    ![Publish Settings](/public/img/image01.png)   
-   1. Choose connection.   
-   ![Connection Settings](/public/img/image02.png)  
+   1. Choose connection. ![Connection Settings](/public/img/image02.png)  
    1. In field "Database Name" type new database name (i. e. SampleDatabase2).
    1. Press "OK".
    1. Press "Publish".
