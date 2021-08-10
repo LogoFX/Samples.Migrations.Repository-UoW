@@ -9,7 +9,7 @@ The step by step sample shows how to create a minimalistic ASP.NET Web API 2 Web
 
 ## The Source Code
 
-The source code contains six subfolders named as Part(n). Each of the parts are just steps on the solution genesis roadmap.
+The source code contains four subfolders named as ``part(n)``. Each of the parts are just steps on the solution genesis roadmap.
 
 ### Part 1
 * The API project uses different modules to access to database due selected solution build configuration.
@@ -27,12 +27,6 @@ The source code contains six subfolders named as Part(n). Each of the parts are 
 ### Part 4
 * ```Court``` entity has nested property ```Level``` which linked to ```CourtLevels``` table via ```LevelId``` foreign key.
 
-### Part 5
-* TBD
-
-### Part 6
-* TBD
-
 ## Prerequisites
 
 1. Microsoft .NET Framework v.4.7.2 or above;
@@ -42,7 +36,7 @@ The source code contains six subfolders named as Part(n). Each of the parts are 
 
 ## How to start
 1. Download, or clone, or fork the repository.
-1. Choose a step (```src/Part(n)```) folder to start to play with solution. We recommend to start from Part5 or Part6, and examine all the way from Part1 to Part(n) after.
+1. Choose a step (```src/Part(n)```) folder to start to play with solution. We recommend to start from ```part3``` or ```part4```, and examine all the way from Part1 to Part(n) after.
 1. Run ```/devops/run-once.cmd```. It installs globally nswag package.
 1. Open the solution found in one of Part(n) folders in the Visual Studio 2019.
 1. Create database using ```Samples.Server.SampleDB``` project.
